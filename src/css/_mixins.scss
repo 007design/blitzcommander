@@ -1,0 +1,133 @@
+
+@import "colors";
+
+@mixin datacardView {
+  #view_datacard:checked ~ & {
+    @content;
+  }
+}
+@mixin armyView {
+  #view_army:checked ~ & {
+    @content;
+  }
+}
+@mixin defaultView {
+  #view_default:checked ~ & {
+    @content;
+  }
+}
+@mixin mobile {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+@mixin desktop {
+  @media (min-width: 768px) {
+    @content;
+  }
+}
+@mixin barsIcon {
+  &::before {
+    position: absolute;
+    top: 12px;
+    left: 14px;
+    content: "";
+    display: inline-block;
+    width: 15px;
+    height: 5px;
+    border: none;
+    background-color: $yellow;
+    transform: none;
+  }
+
+  &::after {
+    position: relative;
+    top: 15px;
+    left: 14px;
+    content: "";
+    display: inline-block;
+    width: 15px;
+    height: 5px;
+    border: none;
+    background-color: $yellow;
+  }
+}
+@mixin datacardIcon {
+  &::before {
+    position: relative;
+    top: 12px;
+    left: 14px;
+    content: "";
+    display: inline-block;
+    width: 12px;
+    height: 17px;
+    background-color: $yellow;
+    border: 3px solid black;
+  }
+
+  &::after {
+    position: relative;
+    top: 7px;
+    left: -8px;
+    content: "";
+    display: inline-block;
+    width: 12px;
+    height: 17px;
+    background-color: $yellow;
+    border: 3px solid black;
+  }
+}
+@mixin arrowRight {
+  z-index: 2;
+  height: 38px;
+  width: 38px;
+  top: 41px;
+
+  @include mobile {
+    border-radius: 0;
+    transform: none;
+    height: 40px;
+    width: 100%;
+    top: 40px;
+  }
+
+  &::before {
+    position: relative;
+    top: 9px;
+    left: 5px;
+    content: "";
+    display: inline-block;
+    width: 13px;
+    height: 13px;
+    border-right: 6px solid $yellow;
+    border-top: 6px solid $yellow;
+    transform: rotate(45deg);
+
+    @include mobile {
+      top: 4px;
+      left: calc(100% - 40px);
+      transform: rotate(135deg);
+      border-color: $yellow;
+    }
+  }
+}
+@mixin arrowLeft {
+  &::before {
+    position: relative;
+    top: 9px;
+    left: 10px;
+    content: "";
+    display: inline-block;
+    width: 13px;
+    height: 13px;
+    border-right: 6px solid $yellow;
+    border-top: 6px solid $yellow;
+    transform: rotate(-135deg);
+
+    @include mobile {
+      top: 12px;
+      left: calc(100% - 40px);
+      transform: rotate(-45deg);
+    }
+  }
+}

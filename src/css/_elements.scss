@@ -1,0 +1,328 @@
+@import "colors", "mixins";
+
+.garage-list {
+  position: relative;
+  flex: 1 0 0;
+  display: flex;
+  align-items: flex-start;
+  font-size: 14px;
+  overflow: scroll;
+
+  @include mobile {
+    flex: 1 1;
+    height: 100%;
+  }
+}
+
+.combat-group {
+  width: 100%;
+
+  @include mobile {
+    overflow-x: auto;
+    overflow-y: scroll
+  }
+
+  .unit-list {
+    border-right: 2px solid darkgray;
+    border-left: 5px solid darkgray;
+    border-bottom: 2px solid darkgray;
+  }
+}
+
+.army-list {
+  position: relative;
+  width: 100%;
+  flex: 1 0 0;
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  overflow-y: scroll;
+
+  @include mobile {
+    flex: 1 1;
+    width: 100%;
+    overflow: auto;
+  }
+}
+
+.unit-scroll {
+  position: relative;
+  width: 100%;
+  overflow: auto;
+}
+
+.unit-stats {
+  display: flex;
+  flex-wrap: nowrap;
+  background-color: $color_table-row-odd;
+
+  @include mobile {
+    background-color: white;
+    margin-bottom: 5px;
+    flex-wrap: wrap;
+
+    .th {
+      display: block;
+    }
+  }
+
+  &:nth-child(even) {
+    background-color: $color_table-row-even;
+  }
+
+  &:first-child {
+    .th {
+      display: block;
+    }
+  }
+}
+
+.stat-pair {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  border-bottom: 1px solid $color_table-border;
+
+  &.controls {
+    justify-content: flex-end;
+  }
+
+  .th {
+    background-color: rgb(232, 232, 232);
+    color: black;
+    font-weight: 700;
+    padding: 4px;
+  }
+
+  .td {
+    padding: 4px;
+  }
+
+  @include mobile {
+    flex-direction: row;
+    width: 50%;
+
+    .th {
+      width: 50%;
+    }
+
+    &.controls {
+      width: 40px;
+    }
+
+    &.name {
+      font-weight: 700;
+      font-size: 18px;
+      width: calc(67% - 40px);
+    }
+
+    &.ua {
+      width: 67%;
+    }
+
+    &.name .th {
+      display: none;
+    }
+
+    &.ar,
+    &.a,
+    &.gu,
+    &.ew {
+      width: 33%;
+    }
+
+    &.hs,
+    &.pi {
+      width: 34%;
+    }
+
+    &.rweapons,
+    &.mweapons,
+    &.traits,
+    &.etc {
+      width: 100%;
+
+      .th {
+        width: 100%;
+      }
+
+      .td {
+        width: 100%;
+      }
+    }
+
+    &.tv,
+    &.mr {
+      width: 33%;
+    }
+
+    &.type,
+    &.height {
+      display: none;
+    }
+  }
+}
+
+@include desktop {
+  #left_panel {
+    @include defaultView {
+      .unit-scroll {
+        overflow: auto;
+      }
+      .unit-stats {
+        margin-bottom: 0;
+
+          .th {
+            display: none;
+          }
+      }
+      .stat-pair {
+        display: none;
+        flex-direction: row;
+
+        &.controls {
+          display: block;
+        }
+
+        &.name {
+          display: block;
+          flex: 1 0 auto;
+          max-width: calc(100% - 84px);
+
+          .th {
+            display: none;
+          }
+        }
+
+        &.tv {
+          display: flex;
+          flex-direction: row-reverse;
+          flex-grow: 1;
+
+          .th {
+            display: block;
+            background-color: transparent;
+            font-weight: 400;
+          }
+        }
+      }
+    }
+
+    @include armyView {
+      .unit-list {
+        display: table;
+        table-layout: fixed;
+        width: auto;
+        border: none;
+        min-width: 100%;
+      }
+
+
+      .unit-stats {
+        display: table-row;
+
+        &:nth-child(even) {
+          .name,
+          .controls {
+            background-color: $color_table-row-even;
+          }
+        }
+      }
+      .stat-pair {
+        display: table-cell;
+        white-space: nowrap;
+
+        &.name,
+        &.controls {
+          position: sticky;
+          background-color: $color_table-row-odd;
+        }
+
+        &.name {
+          left: 25px;
+        }
+
+        &.controls {
+          min-width: 25px;
+          left: 0px;
+          vertical-align: bottom;
+        }
+
+        .th {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+.cg-header {
+  position: sticky;
+  left: 0;
+  height: 40px;
+  background-color: darkgray;
+  padding: 0 4px;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+}
+
+.unit-list {
+  width: 100%;
+  border: 0;
+  border-spacing: 0;
+  
+  thead {
+    border-collapse: collapse;
+  }
+
+  th {
+    position: sticky;
+    height: 40px;
+    top: 0;
+    z-index: 1;
+    background-color: darkgray;
+    color: black;
+    border-right: 1px solid rgb(80,80,80);
+    padding: 0 6px;
+    text-align: left;
+    cursor: pointer;
+
+    &.unit-name {
+      z-index: 2;
+    }
+  }
+
+  tr {
+    width: 100%;
+
+    &:hover td {
+      background-color: $color_row-hover;
+    }
+  }
+
+  th:hover {
+    background-color: $color_row-hover;
+  }
+
+  td {
+    white-space: nowrap;
+  }
+
+  .unit-name {
+    position: sticky;
+    left: 0;
+    border-right: 1px solid $color_table-border;
+    box-shadow: 1px 0 3px rgba(0,0,0,.1);
+  }
+
+  .unit-controls {
+    position: sticky;
+    right: 0px;
+    border-left: 1px solid $color_table-border;
+    width: 40px;
+    box-shadow: -1px 0 3px rgba(0,0,0,.1);
+  }
+}
