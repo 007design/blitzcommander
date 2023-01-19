@@ -1,4 +1,4 @@
-export default function (props: any) {
+export default function DeleteUnitButton (props: any) {
   return (
     <button
       className="delete-button"

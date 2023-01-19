@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import "../types";
 
 import FilterTag from "./FilterTag";
@@ -9,7 +9,9 @@ export default function FilterPanel({
   sorting,
   filters,
   updateFilters,
-  clearSorting
+  clearSorting,
+  optionsToggle,
+  variantsToggle
 }: {
   labels: Labels;
   garage: Array<Unit>;
@@ -17,7 +19,11 @@ export default function FilterPanel({
   filters: Array<Filter>;
   updateFilters: Function;
   clearSorting: Function;
+  optionsToggle: Function;
+  variantsToggle: Function;
 }) {
+  let [hideOptions, setHideOptions] = useState<boolean>(true);
+  let [groupVariants, setGroupVariants] = useState<boolean>(true);
   let [newFilter, setNewFilter] = useState<Filter>({
     key: "",
     label: "",
@@ -36,7 +42,7 @@ export default function FilterPanel({
     if (sorting.key)
       sortTag = (
         <div className="tag">
-          Sort: {sorting.key}, {sorting.direction}
+          Sort: {labels[sorting.key]}, {sorting.direction}
           <button className="delete-tag" onClick={() => clearSorting()} />
         </div>
       );
@@ -59,13 +65,27 @@ export default function FilterPanel({
     if (garage.length && newFilter.key) {
       garage.forEach((unit: Unit) => {
         const value = unit[newFilter.key];
-        if (value && list.indexOf(value) < 0) {
-          if (
-            !filters.find(
-              ({ value: val }) => value.toString() === val.toString()
+
+        if (Array.isArray(value)) {
+          value.forEach((entry) => {
+            if (entry && list.indexOf(entry) < 0) {
+              if (
+                !filters.find(
+                  ({ value: val }) => entry.toString() === val.toString()
+                )
+              )
+                list.push(entry);
+            }
+          })
+        } else {
+          if (value && list.indexOf(value) < 0) {
+            if (
+              !filters.find(
+                ({ value: val }) => value.toString() === val.toString()
+              )
             )
-          )
-            list.push(value);
+              list.push(value);
+          }
         }
       });
     }
@@ -102,6 +122,22 @@ export default function FilterPanel({
     });
   };
 
+  const toggleOptions = () => {
+    setHideOptions(!hideOptions);
+  };
+
+  const toggleGrouping = () => {
+    setGroupVariants(!groupVariants);
+  };
+
+  useEffect(() => {
+    optionsToggle(hideOptions);
+  }, [hideOptions]);
+
+  useEffect(() => {
+    variantsToggle(groupVariants);
+  }, [groupVariants]);
+
   const keyInput = (
     <select
       name="new_filter_key"
@@ -110,10 +146,12 @@ export default function FilterPanel({
     >
       <option value="">Filter by</option>
       <option value="faction">Faction</option>
+      <option value="ua">Role</option>
       <option value="tv">TV</option>
       <option value="chassis">Chassis</option>
       <option value="name">Name</option>
-      <option value="ua">Roles</option>
+      <option value="mweapons">Mounted Weapons</option>
+      <option value="rweapons">React Weapons</option>
       <option value="mr">Movement</option>
       <option value="ar">Armor</option>
       <option value="type">Type</option>
@@ -146,13 +184,33 @@ export default function FilterPanel({
   );
 
   return (
-    <aside id="filter_controls">
+    <aside id="filter_panel">
       {tags}
-      <div className="new-filter">
-        {keyInput}
-        {valueInput}
-        <button className="add-button" onClick={() => addFilter()} />
-        {/* <button className="or-button" onClick={() => addFilter('or')} /> */}
+      <div id="filter_controls">
+        <div id="new_filter">
+          {keyInput}
+          {valueInput}
+          <button className="add-button" onClick={() => addFilter()} disabled={!newFilter.key || !newFilter.value} />
+          {/* <button className="or-button" onClick={() => addFilter('or')} /> */}
+        </div>
+        <label>
+          <input 
+            type="checkbox" 
+            name="hide_options" 
+            id="hide_options" 
+            checked={hideOptions}
+            onChange={toggleOptions} />
+            Hide Options
+        </label>
+        <label>
+          <input 
+            type="checkbox" 
+            name="group_variants" 
+            id="group_variants" 
+            checked={groupVariants}
+            onChange={toggleGrouping} />
+            Group Variants
+        </label>
       </div>
     </aside>
   );

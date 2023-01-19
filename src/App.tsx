@@ -1,24 +1,109 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, ReactElement, FunctionComponentElement, DOMElement } from "react";
 import axios from "axios";
 
 import "./styles.scss";
 import "./types";
 
+import Modal from "./components/Modal";
+import Tooltip from "./components/Tooltip";
 import ArmyPanel from "./components/ArmyPanel";
 import GaragePanel from "./components/GaragePanel";
-import AddSquadButton from "./components/AddSquadButton";
-import FilterPanel from "./components/FilterPanel";
 
 export default function App() {
-  const [garage, setGarage] = useState<Array<Unit>>([]);
+  const [view, setView] = useState('default')
+
+  const [modalContent, setModalContent] = useState<FunctionComponentElement<ReactElement>>();
+  const [showModal, setShowModal] = useState(false);
+
+  const [tooltipElement, setTooltipElement] = useState<DOMRect>();
+  const [showTooltip, setShowTooltip] = useState(false);
+  const [tooltipContent, setTooltipContent] = useState<string>();
+
   const [tooltips, setTooltips] = useState({});
   const [labels, setLabels] = useState({});
-  const [army, setArmy] = useState<Army>({});
-  const [sorting, setSorting] = useState<Sort>({
-    key: "chassis",
-    direction: "asc"
+
+  const [garage, setGarage] = useState<Array<Unit>>([]);
+  const [army, setArmy] = useState<Army>({
+    name: 'My Army',
+    squads: [],
   });
-  const [filters, setFilters] = useState<Array<Filter>>([]);
+
+  const queryParams = new URLSearchParams(window.location.search)
+  let qsArmy:Army;
+
+  const loadArmyFromQs = () => {
+    try {
+      const qs = JSON.parse(queryParams.get("a") || '');
+
+      if (qs) {
+        qsArmy = {
+          name: qs.name,
+          squads: qs.squads.map(({name, units}: {name:string, units:Array<any>}) => ({
+            name,
+            units: units.map((qsUnit) => {
+              const foundUnit = garage.find(({ id }:{id:string}) => {
+                return id === qsUnit.id
+              })
+
+              const foundOptions = garage.filter(({ id }) => qsUnit.opts.includes(id))
+
+              return {
+                ...foundUnit,
+                options: foundOptions,
+              };
+            })
+          }))
+        };
+
+        setArmy(qsArmy);
+      }
+    } catch {
+    }
+  };
+
+  const updateQs = () => {
+    const squads = army.squads?.map(({ name, units }: {name:string, units:Array<Unit>}) => ({
+      name,
+      units: units.map(({ id, options }: {id:string, options:Array<Unit>}) => ({
+        id,
+        opts: options.map(({ id }:{id:string}) => id)
+      }))
+    }))
+
+    const url = new URL(window.location.href);
+    url.searchParams.set('a',  JSON.stringify({
+      name: army.name,
+      squads,
+    }));
+    window.history.pushState(null, '', url.toString());
+  };
+
+  const openModal = (content:FunctionComponentElement<ReactElement>) => {
+    setModalContent(content);
+    setShowModal(true);
+  }
+
+  const closeModal = () => {
+    setShowModal(false);
+  }
+
+  const openTooltip = (element:DOMRect, content:string) => {
+    setTooltipContent(content);
+    setTooltipElement(element);
+    setShowTooltip(true);
+  }
+
+  const closeTooltip = () => {
+    setShowTooltip(false);
+  }
+
+  const renameArmy = (name:string) => {
+    setArmy({
+      ...army,
+      name
+    })
+    updateQs();
+  };
 
   const addSquad = () => {
     const squads = army?.squads || [];
@@ -31,6 +116,20 @@ export default function App() {
       ...army,
       squads
     });
+    updateQs();
+  };
+
+  const renameSquad = (cgIndex: number, name:string) => {
+    const squads = army?.squads || [];
+    squads[cgIndex] = {
+      ...squads[cgIndex],
+      name
+    }
+    setArmy({
+      ...army,
+      squads
+    });
+    updateQs();
   };
 
   const deleteSquad = (index: number) => {
@@ -42,6 +141,21 @@ export default function App() {
       ...army,
       squads
     });
+    updateQs();
+  };
+
+  const addOption = (cgIndex: number, unitIndex: number, unit: Unit) => {
+    const squads = army?.squads;
+
+    if (squads && squads[cgIndex]) {
+      squads[cgIndex].units[unitIndex].options.push(unit);
+    }
+
+    setArmy({
+      name: army?.name || "My Army",
+      squads
+    });
+    updateQs();
   };
 
   const addUnit = (cgIndex: number = -1, unit: Unit) => {
@@ -57,6 +171,7 @@ export default function App() {
       name: army?.name || "My Army",
       squads
     });
+    updateQs();
   };
 
   const deleteUnit = (cgIndex: number, unitIndex: number) => {
@@ -67,54 +182,27 @@ export default function App() {
       ...army,
       squads
     });
-  };
-
-  const setSortBy = (key: string) => {
-    const direction =
-      sorting?.key === key
-        ? sorting?.direction === "asc"
-          ? "desc"
-          : "asc"
-        : "asc";
-    setSorting({
-      key,
-      direction
-    });
-  };
-
-  const clearSorting = () => {
-    setSorting({
-      key: "",
-      direction: "asc"
-    });
-  };
-
-  const updateFilters = (newFilters: Array<Filter>) => {
-    setFilters(newFilters);
+    updateQs();
   };
 
   useEffect(() => {
     (async () => {
       try {
-        const response = await axios.get("./garage.json");
+        const response = await axios.get("./data.json");
 
         setLabels(response.data.labels);
         setTooltips(response.data.tooltips);
         setGarage(response.data.statlines);
-        setArmy({
-          name: "My Army",
-          squads: [
-            {
-              name: "Combat Group",
-              units: response.data.statlines.slice(0, 4)
-            }
-          ]
-        });
       } catch (x) {
         console.log(x);
       }
     })();
   }, []);
+
+  useEffect(() => {
+    if (garage.length > 0)
+      loadArmyFromQs();
+  }, [garage]);
 
   return (
     <div id="App">
@@ -124,60 +212,51 @@ export default function App() {
         </div>
         <nav id="menu">Menu</nav>
       </header>
-      <main>
-        <input
+      <main className={view}>
+        <button
           className="view-toggle"
-          type="radio"
-          name="view"
           id="view_datacard"
-          value="datacard"
+          onClick={() => setView('datacard')}
         />
-        <input
+        <button
           className="view-toggle"
-          type="radio"
-          name="view"
           id="view_army"
-          value="army"
+          onClick={() => setView('army')}
         />
-        <input
+        <button
           className="view-toggle"
-          type="radio"
-          name="view"
           id="view_default"
-          value="default"
-          defaultChecked
+          onClick={() => setView('default')}
         />
-        <section id="left_panel">
-          <div className="army-name">{army.name}</div>
-          <ArmyPanel
-            army={army}
-            deleteUnit={deleteUnit}
-            deleteCg={deleteSquad}
-          />
-          <AddSquadButton army={army} click={addSquad} />
-        </section>
-        <section id="right_panel">
-          <FilterPanel
-            labels={labels}
-            sorting={sorting}
-            filters={filters}
-            garage={garage}
-            updateFilters={updateFilters}
-            clearSorting={clearSorting}
-          />
-          <div className="garage-list">
-            <GaragePanel
-              army={army}
-              units={garage}
-              click={addUnit}
-              sorting={sorting}
-              filters={filters}
-              sort={setSortBy}
-            />
-          </div>
-        </section>
+        <ArmyPanel
+          army={army}
+          tooltips={tooltips}
+          deleteUnit={deleteUnit}
+          deleteCg={deleteSquad}
+          renameCg={renameSquad}
+          addSquad={addSquad}
+          renameArmy={renameArmy}
+        />
+        <GaragePanel
+          army={army}
+          garage={garage}
+          labels={labels}
+          tooltips={tooltips}
+          addUnit={addUnit}
+          addOption={addOption}
+          openModal={openModal}
+          closeModal={closeModal}
+          openTooltip={openTooltip}
+          closeTooltip={closeTooltip}
+        />
       </main>
       <footer>BlitzCommander 2.0</footer>
+      <Modal showModal={showModal} hide={closeModal}>
+        {modalContent}
+      </Modal>
+      <Tooltip show={showTooltip} hide={closeTooltip} el={tooltipElement}>
+        {tooltipContent}
+      </Tooltip>
     </div>
   );
 }

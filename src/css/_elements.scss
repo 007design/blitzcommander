@@ -1,6 +1,27 @@
 @import "colors", "mixins";
 
-.garage-list {
+#army_name {
+  position: relative;
+  width: 100%;
+  height: 40px;
+  padding: 0 50px;
+  background-color: black;
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+.edit-name {
+  outline: none;
+  height: 25px;
+  width: 100%;
+  padding: 0 5px;
+  background-color: #eee;
+  border: 1px solid $yellow;
+  box-shadow: inset 1px 1px 3px $color_button-fg;
+}
+
+#garage-list {
   position: relative;
   flex: 1 0 0;
   display: flex;
@@ -14,19 +35,56 @@
   }
 }
 
+#filter_panel {
+  position: sticky;
+  top: 40px;
+  min-height: 35px;
+  padding-right: 5px;
+  flex: 0 1 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  background-color: white;
+  
+  @include mobile {
+    padding: 0;
+  }
+}
+
+#new_filter {
+  display: flex;
+  align-items: center;
+  padding-right: 5px;
+  
+  select {
+    height: 28px;
+    background-color: white;
+    border: 1px solid $color_filter-border;
+    border-radius: 3px;
+    font-size: 14px;
+    padding: 4px 6px;
+    margin-right: 5px;
+  }
+}
+
+#filter_controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  label {
+    padding: 8px;
+    font-size: 14px;
+    border-left: 1px solid $color_table-border;
+
+    input {
+      margin-right: 5px;
+    }
+  }
+}
+
 .combat-group {
   width: 100%;
-
-  @include mobile {
-    overflow-x: auto;
-    overflow-y: scroll
-  }
-
-  .unit-list {
-    border-right: 2px solid darkgray;
-    border-left: 5px solid darkgray;
-    border-bottom: 2px solid darkgray;
-  }
 }
 
 .army-list {
@@ -45,10 +103,18 @@
   }
 }
 
-.unit-scroll {
-  position: relative;
-  width: 100%;
-  overflow: auto;
+.unit-row {
+  background-color: white;
+  
+  @include armyView {
+    display: table-row;
+  }
+
+  &:first-child {
+    .th {
+      display: block;
+    }
+  }
 }
 
 .unit-stats {
@@ -56,6 +122,13 @@
   flex-wrap: nowrap;
   background-color: $color_table-row-odd;
 
+  @include armyView {
+    @include mobile {
+      display: flex;
+      font-size: 12px;
+    }
+  }
+  
   @include mobile {
     background-color: white;
     margin-bottom: 5px;
@@ -68,17 +141,20 @@
 
   &:nth-child(even) {
     background-color: $color_table-row-even;
-  }
 
-  &:first-child {
-    .th {
-      display: block;
+    @include mobile {
+      background-color: white;
+    }
+    
+    .name,
+    .controls {
+      background-color: $color_table-row-even;
     }
   }
 }
 
 .stat-pair {
-  display: flex;
+  display: table-cell;
   flex-wrap: wrap;
   flex-direction: column;
   border-bottom: 1px solid $color_table-border;
@@ -87,7 +163,12 @@
     justify-content: flex-end;
   }
 
+  &.controls, &.name {
+    background-color: $color_table-row-odd;
+  }
+
   .th {
+    display: none;
     background-color: rgb(232, 232, 232);
     color: black;
     font-weight: 700;
@@ -98,11 +179,84 @@
     padding: 4px;
   }
 
+  .expanded {
+    display: none;
+    
+    table {
+      width: 100%;
+    }
+  }
+
+  @include armyView {
+    @include mobile {
+      .expanded {
+        display: block;
+        overflow: auto;
+      }
+      .collapsed {
+        display: none;
+      }
+    }
+  }
+
+  @include defaultView {
+    display: none;
+    flex-direction: row;
+
+    &.controls {
+      display: block;
+    }
+  
+    &.name {
+      display: block;
+      flex: 1 0 auto;
+      max-width: calc(100% - 84px);
+  
+      .th {
+        display: none;
+      }
+    }
+  
+    &.tv {
+      display: flex;
+      flex-direction: row-reverse;
+      flex-grow: 1;
+  
+      .th {
+        display: block;
+        background-color: transparent;
+        font-weight: 400;
+      }
+    }
+  }
+
+  @include armyView {
+    white-space: nowrap;
+
+    &.name,
+    &.controls {
+      position: sticky;
+      // background-color: $color_table-row-odd;
+    }
+
+    &.name {
+      left: 25px;
+    }
+
+    &.controls {
+      min-width: 25px;
+      left: 0px;
+      vertical-align: bottom;
+    }
+  }
+
   @include mobile {
+    display: flex;
     flex-direction: row;
     width: 50%;
 
     .th {
+      display: flex;
       width: 50%;
     }
 
@@ -163,110 +317,88 @@
   }
 }
 
-@include desktop {
-  #left_panel {
-    @include defaultView {
-      .unit-scroll {
-        overflow: auto;
-      }
-      .unit-stats {
-        margin-bottom: 0;
-
-          .th {
-            display: none;
-          }
-      }
-      .stat-pair {
-        display: none;
-        flex-direction: row;
-
-        &.controls {
-          display: block;
-        }
-
-        &.name {
-          display: block;
-          flex: 1 0 auto;
-          max-width: calc(100% - 84px);
-
-          .th {
-            display: none;
-          }
-        }
-
-        &.tv {
-          display: flex;
-          flex-direction: row-reverse;
-          flex-grow: 1;
-
-          .th {
-            display: block;
-            background-color: transparent;
-            font-weight: 400;
-          }
-        }
-      }
-    }
-
-    @include armyView {
-      .unit-list {
-        display: table;
-        table-layout: fixed;
-        width: auto;
-        border: none;
-        min-width: 100%;
-      }
-
-
-      .unit-stats {
-        display: table-row;
-
-        &:nth-child(even) {
-          .name,
-          .controls {
-            background-color: $color_table-row-even;
-          }
-        }
-      }
-      .stat-pair {
-        display: table-cell;
-        white-space: nowrap;
-
-        &.name,
-        &.controls {
-          position: sticky;
-          background-color: $color_table-row-odd;
-        }
-
-        &.name {
-          left: 25px;
-        }
-
-        &.controls {
-          min-width: 25px;
-          left: 0px;
-          vertical-align: bottom;
-        }
-
-        .th {
-          display: none;
-        }
-      }
-    }
-  }
+.unit-options {
+  display: table-row;
+  padding: 2px 4px;
+  font-size: 12px;
 }
 
 .cg-header {
   position: sticky;
   left: 0;
-  height: 40px;
+  height: 45px;
   background-color: darkgray;
-  padding: 0 4px;
+  padding: 3px 4px 15px;
   display: flex;
   flex-direction: row-reverse;
   justify-content: space-between;
-  align-items: center;
+  align-items: stretch;
   font-weight: 700;
+}
+
+.cg-name {
+  height: 40px;
+}
+
+.cg-roles {
+  position: absolute;
+  bottom: 2px;
+  left: 5px;
+  font-size: 11px;
+
+  &.invalid {
+    .role {
+      color: $red;
+    }
+  }
+}
+
+.role {
+  margin-right: 5px;
+  color: black;
+
+  &.invalid {
+    color: $color_button-fg;
+  }
+
+  &.selected {
+    color: $yellow;
+    text-shadow: 0px 0px 3px black;
+  }
+}
+
+.cg-list {
+  width: 100%;
+  border: 0;
+  border-spacing: 0;
+  flex: 1 0 auto;
+  border-right: 2px solid darkgray;
+  border-left: 5px solid darkgray;
+  border-bottom: 2px solid darkgray;
+
+  td {
+    height: 20px;
+    border-bottom: 0;
+  }
+
+  tr:nth-child(odd) {
+    td {
+      background-color: white;
+    }
+  }
+
+  @include armyView {
+    display: table;
+    table-layout: fixed;
+    width: auto;
+    border: none;
+    min-width: 100%;
+
+    @include mobile {
+      display: flex;
+      flex-direction: column;
+    }
+  }
 }
 
 .unit-list {
@@ -283,9 +415,9 @@
     height: 40px;
     top: 0;
     z-index: 1;
-    background-color: darkgray;
+    background-color: $color_table-header;
     color: black;
-    border-right: 1px solid rgb(80,80,80);
+    border-right: 1px solid $color_table-header-border;
     padding: 0 6px;
     text-align: left;
     cursor: pointer;
@@ -300,6 +432,17 @@
 
     &:hover td {
       background-color: $color_row-hover;
+    }
+    
+    &.variant {
+      .unit-name {
+        border-top: 0;
+        border-left: 5px solid $color_table-border;
+      }
+      
+      td {
+        border-top: none;
+      }
     }
   }
 

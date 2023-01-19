@@ -17,19 +17,10 @@ Time went by and DP9 soldiered on. When they released the 3.0 version of the rul
 ## TODO
 - Datacard view
 - Load/save modal
-- Query string
 - Traits modal
+- CG objectives modal
 - Other modals (About, etc)
-- Rename Army and CGs
-- CG role indicator
-- Veteran button
-- CGL button
-- FC button
-- Role filters
-- Weapon tooltips
-- Traits tooltips
-- Available objectives modal
-- Clean up CSS
+- Table and/or sorting
 - Print stylesheets
 
 ## Credit

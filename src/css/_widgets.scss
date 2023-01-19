@@ -63,33 +63,18 @@
     border-weight: 3px;
   }
 
-  &:hover,
-  &.highlight {
-    border-color: black;
-    background-color: $color_button-hover;
-    &::before, &::after {
-      background-color: black;
+  &:not([disabled]) {
+    &:hover,
+    &.highlight {
+      border-color: black;
+      background-color: $color_button-hover;
+      &::before, &::after {
+        background-color: black;
+      }
     }
   }
 
-  &::before, &::after {
-    content: '';
-    position: absolute;
-    width: 13px;
-    height: 3px;
-    top: 9px;
-    left: 4px;
-    background-color: $color_button-fg;
-  
-    @include mobile {
-      width: 18px;
-      top: 11px;
-    }
-  }
-
-  &::after {
-    transform: rotate(90deg);
-  }
+  @include plusSign;
 }
 
 .or-button {
@@ -141,6 +126,64 @@
   }
 }
 
+.edit-pencil {
+  position: relative;
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  vertical-align: middle;
+  cursor: pointer;
+
+  &:before {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-2px, -3px) rotate(-45deg);
+    width: 3px;
+    height: 5px;
+    background-color: $color_button-fg;
+    box-shadow: 1px 0px 0px $color_button-fg, 
+                2px 0px 0px $color_button-fg, 
+                3px 0px 0px $color_button-fg, 
+                -1px 0px 0px $color_button-fg, 
+                -2px 0px 0px $color_button-fg, 
+                -3px 0px 0px $color_button-fg, 
+                -3.3px 0px 0px $color_button-fg, 
+                7px 0px 0px $color_button-fg;
+    content: '';
+  }
+  
+  &:after {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-9px, 3px) rotate(-45deg);
+    font-size: 1px;
+    border: solid 3em transparent;
+    border-left-width: 0;
+    border-right-width: 5em;
+    border-right-color: $color_button-fg;
+    content: '';
+  }
+
+  &:hover {
+    &:before {
+      background-color: $yellow;
+      box-shadow: 1px 0px 0px $yellow, 
+                  2px 0px 0px $yellow, 
+                  3px 0px 0px $yellow, 
+                  -1px 0px 0px $yellow, 
+                  -2px 0px 0px $yellow, 
+                  -3px 0px 0px $yellow, 
+                  -3.3px 0px 0px $yellow, 
+                  7px 0px 0px $yellow;
+    }
+    &:after {
+      border-right-color: $yellow;
+    }
+  }
+}
+
 #new_squad_btn {
   border: 0;
   width: 100%;
@@ -149,6 +192,10 @@
   background-color: $yellow;
   font-weight: 700;
   cursor: pointer;
+
+  @include datacardView {
+    display: none;
+  }
 }
 
 .tag {
@@ -190,59 +237,34 @@
   }
 }
 
-#filter_controls {
-  position: sticky;
-  top: 40px;
-  padding-left: 5px;
-  flex: 0 1 auto;
-  display: flex;
-  flex-wrap: wrap;
-  background-color: white;
-  
-  @include mobile {
-    padding: 0;
-  }
-}
-
-.new-filter {
-  display: flex;
-  align-items: center;
-  
-  select {
-    height: 28px;
-    background-color: white;
-    border: 1px solid $color_filter-border;
-    border-radius: 3px;
-    font-size: 14px;
-    padding: 4px 6px;
-    margin-right: 5px;
-  }
-}
-
-.popup {
+.close-modal {
   position: absolute;
-  top: -1px;
-  left: 0;
-  transform: translateX(-100%);
-  display: flex;
-  flex-direction: column;
-  background-color: white;
-  border: 1px solid $color_filter-border;
-  border-radius: 4px 0 4px 4px;
-  box-shadow: -1px 1px 3px rgba(0,0,0,.4);
-  z-index: 2;
-
-  &.hidden {
-    display: none;
-  }
+  top: 4px;
+  right: 4px;
 }
 
-.squad-button {
+.popup-header {
+  font-weight: 700;
+  padding: 7px;
+  border-bottom: 1px solid $color_table-border;
+}
+
+.popup-cg-label {
+  background-color: $color_table-header;
+  padding: 4px 6px;
+  font-weight: 700;
+  font-size: 12px;
+}
+
+.popup-squad-button {
   appearance: none;
   width: 100%;
   padding: 7px;
   display: block;
-  border: 0;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 1px solid $color_filter-bg;
   background-color: transparent;
   color: $color_filter-border;
   font-weight: 700;
@@ -253,9 +275,25 @@
     border-radius: 4px 0 0 0;
   }
 
-  &:last-child {
-    border-top: 1px solid $color_row-hover;
+  &.new-squad {
+    position: relative;
     border-radius: 0 0 0 4px;
+    border-bottom: 0;
+    padding-left: 22px;
+
+    @include plusSign;
+
+    &::before {
+      background-color: $color_filter-border;
+      top: 15px;
+      left: 5px;
+    }
+
+    &::after {
+      background-color: $color_filter-border;
+      top: 15px;
+      left: 6px;
+    }
   }
 
   &:hover {

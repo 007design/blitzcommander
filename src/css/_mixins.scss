@@ -2,17 +2,17 @@
 @import "colors";
 
 @mixin datacardView {
-  #view_datacard:checked ~ & {
+  .datacard & {
     @content;
   }
 }
 @mixin armyView {
-  #view_army:checked ~ & {
+  .army & {
     @content;
   }
 }
 @mixin defaultView {
-  #view_default:checked ~ & {
+  .default & {
     @content;
   }
 }
@@ -21,9 +21,24 @@
     @content;
   }
 }
-@mixin desktop {
-  @media (min-width: 768px) {
-    @content;
+@mixin plusSign {
+  &::before, &::after {
+    content: '';
+    position: absolute;
+    width: 13px;
+    height: 3px;
+    top: 9px;
+    left: 4px;
+    background-color: $color_button-fg;
+  
+    @include mobile {
+      width: 18px;
+      top: 11px;
+    }
+  }
+
+  &::after {
+    transform: rotate(90deg);
   }
 }
 @mixin barsIcon {
