@@ -16,6 +16,7 @@ Time went by and DP9 soldiered on. When they released the 3.0 version of the rul
 
 ## TODO
 - Fix tooltip left alignment on mobile
+- Filter traits modal
 - CG objectives modal
 - Damage boxes in Army View
 - Remove empty notes from Army View

@@ -260,7 +260,7 @@ export default function App() {
       </main>
       <footer>
         <span>Heavy Gear Blitz, images, and all data © Dream Pod 9.</span>
-        <span><a href="http://007design.com" target="_blank">007design</a></span>
+        <span><a href="http://www.github.com/007design/blitzcommander" target="_blank">v{`${process.env.REACT_APP_VERSION}`}</a></span>
       </footer>
       <Modal showModal={showModal} hide={closeModal}>
         {modalContent}
