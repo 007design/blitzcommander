@@ -259,7 +259,7 @@ export default function App() {
         />
       </main>
       <footer>
-        <span>Heavy Gear Blitz, images and all data © Dream Pod 9.</span>
+        <span>Heavy Gear Blitz, images, and all data © Dream Pod 9.</span>
         <span><a href="http://007design.com" target="_blank">007design</a></span>
       </footer>
       <Modal showModal={showModal} hide={closeModal}>

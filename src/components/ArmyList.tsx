@@ -74,7 +74,7 @@ export default function ArmyList(props: any) {
                       return (
                         <tr className="weapon-row" key={i}>
                           {<td className="weapon-name">
-                            {`${weapon}`}
+                            {`+${weapon}`}
                           </td>}
                           {<td className="weapon-range">
                             {`${parsed?.groups?.range}`}
@@ -134,12 +134,12 @@ export default function ArmyList(props: any) {
             <div className="th">Traits</div>
             <div className="td">
             {row.traits.map((t, i) => (
-              <span className="tooltip-target" key={i} onClick={
+              <span className="tooltip-target" tabIndex={1} key={i} onFocus={
                 (e) => props.openTooltip(
                   e.currentTarget.getBoundingClientRect(), 
                   props.tooltips[t]
                 )
-              }>
+              } onBlur={() => props.closeTooltip()}>
                 {`${i > 0 ? ', ' : ''}${t}`}
               </span>
             ))}  

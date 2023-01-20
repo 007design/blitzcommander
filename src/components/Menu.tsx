@@ -32,9 +32,9 @@ export default function Menu(props: any) {
             <li className="menu-option">
               <button onClick={() => menuCLick('traits')}>Traits</button>
             </li>
-            <li className="menu-option">
+            {/* <li className="menu-option">
               <button onClick={() => menuCLick('objectives')}>Objectives</button>
-            </li>
+            </li> */}
             <li className="menu-option">
               <button onClick={() => menuCLick('about')}>About</button>
             </li>

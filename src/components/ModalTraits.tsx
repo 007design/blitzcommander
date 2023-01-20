@@ -11,8 +11,8 @@ export default function ModalTraits(props: any) {
     <div id="modal_traits">
       <div className="modal-scroll">
         {
-          traits.map((trait) => (
-            <div className="trait-row">
+          traits.map((trait, index) => (
+            <div className="trait-row" key={index}>
               <h2>{trait.key}</h2>
               {trait.value}
             </div>
