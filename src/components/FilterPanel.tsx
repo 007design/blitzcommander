@@ -122,6 +122,21 @@ export default function FilterPanel({
     });
   };
 
+  const filterByFaction = (faction:string) => {
+    if (faction === 'Option') {
+      setHideOptions(false);
+    }
+
+    updateFilters([
+      ...filters.filter((f) => !(faction === 'Option' && f.key === 'faction')),
+      {
+        key: 'faction',
+        label: 'Faction',
+        value: faction
+      }
+    ]);
+  }
+
   const toggleOptions = () => {
     setHideOptions(!hideOptions);
   };
@@ -150,6 +165,7 @@ export default function FilterPanel({
       <option value="tv">TV</option>
       <option value="chassis">Chassis</option>
       <option value="name">Name</option>
+      <option value="traits">Traits</option>
       <option value="mweapons">Mounted Weapons</option>
       <option value="rweapons">React Weapons</option>
       <option value="mr">Movement</option>
@@ -177,7 +193,7 @@ export default function FilterPanel({
   );
 
   const tags = (
-    <div className="filter-tags">
+    <div id="filter_tags">
       {sortTag}
       {filterTags}
     </div>
@@ -187,30 +203,45 @@ export default function FilterPanel({
     <aside id="filter_panel">
       {tags}
       <div id="filter_controls">
+        <div id="faction_filters">
+          <button className="filter-button north" onClick={() => filterByFaction('North')} />
+          <button className="filter-button south" onClick={() => filterByFaction('South')} />
+          <button className="filter-button pr" onClick={() => filterByFaction('Peace River')} />
+          <button className="filter-button nucoal" onClick={() => filterByFaction('NuCoal')} />
+          <button className="filter-button bt" onClick={() => filterByFaction('Black Talon')} />
+          <button className="filter-button cef" onClick={() => filterByFaction('CEF')} />
+          <button className="filter-button caprice" onClick={() => filterByFaction('Caprice')} />
+          <button className="filter-button utopia" onClick={() => filterByFaction('Utopia')} />
+          <button className="filter-button eden" onClick={() => filterByFaction('Eden')} />
+          <button className="filter-button universal" onClick={() => filterByFaction('Universal')} />
+          <button className="filter-button options" onClick={() => filterByFaction('Option')} />
+        </div>
         <div id="new_filter">
           {keyInput}
           {valueInput}
           <button className="add-button" onClick={() => addFilter()} disabled={!newFilter.key || !newFilter.value} />
           {/* <button className="or-button" onClick={() => addFilter('or')} /> */}
         </div>
-        <label>
-          <input 
-            type="checkbox" 
-            name="hide_options" 
-            id="hide_options" 
-            checked={hideOptions}
-            onChange={toggleOptions} />
-            Hide Options
-        </label>
-        <label>
-          <input 
-            type="checkbox" 
-            name="group_variants" 
-            id="group_variants" 
-            checked={groupVariants}
-            onChange={toggleGrouping} />
-            Group Variants
-        </label>
+        <div id="global_filters">
+          <label>
+            <input 
+              type="checkbox" 
+              name="hide_options" 
+              id="hide_options" 
+              checked={hideOptions}
+              onChange={toggleOptions} />
+              Hide Options
+          </label>
+          <label>
+            <input 
+              type="checkbox" 
+              name="group_variants" 
+              id="group_variants" 
+              checked={groupVariants}
+              onChange={toggleGrouping} />
+              Group Variants
+          </label>
+        </div>
       </div>
     </aside>
   );

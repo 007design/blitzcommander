@@ -54,7 +54,12 @@ export default function CombatGroup(props: any) {
           <span className={`role ${rolesClasses.so ? '' : 'invalid'}`}>SO</span>
         </div>
       </div>
-      <ArmyList units={props.units} tooltips={props.tooltips}>
+      <ArmyList
+        units={props.units}
+        tooltips={props.tooltips}        
+        openTooltip={props.openTooltip}
+        closeTooltip={props.closeTooltip}
+      >
         <DeleteUnitButton cgIndex={props.index} deleteUnit={props.deleteUnit} />
       </ArmyList>
     </div>

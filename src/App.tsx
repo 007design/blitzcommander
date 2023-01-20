@@ -222,12 +222,12 @@ export default function App() {
           className="view-toggle"
           id="view_army"
           onClick={() => setView('army')}
-        />
+        >{army.name}</button>
         <button
           className="view-toggle"
           id="view_default"
           onClick={() => setView('default')}
-        />
+        >Garage</button>
         <ArmyPanel
           army={army}
           tooltips={tooltips}
@@ -236,6 +236,8 @@ export default function App() {
           renameCg={renameSquad}
           addSquad={addSquad}
           renameArmy={renameArmy}
+          openTooltip={openTooltip}
+          closeTooltip={closeTooltip}
         />
         <GaragePanel
           army={army}
@@ -250,7 +252,10 @@ export default function App() {
           closeTooltip={closeTooltip}
         />
       </main>
-      <footer>BlitzCommander 2.0</footer>
+      <footer>
+        <span>Heavy Gear Blitz, images and all data © Dream Pod 9.</span>
+        <span><a href="http://007design.com" target="_blank">007design</a></span>
+      </footer>
       <Modal showModal={showModal} hide={closeModal}>
         {modalContent}
       </Modal>

@@ -1,0 +1,87 @@
+@import "mixins", "colors";
+
+#garage-list {
+  position: relative;
+  flex: 1 0 0;
+  display: flex;
+  align-items: flex-start;
+  font-size: 14px;
+  overflow: scroll;
+
+  @include mobile {
+    flex: 1 1;
+    height: 100%;
+  }
+}
+
+.unit-list {
+  width: 100%;
+  border: 0;
+  border-spacing: 0;
+  
+  thead {
+    border-collapse: collapse;
+  }
+
+  th {
+    position: sticky;
+    height: 40px;
+    top: 0;
+    z-index: 1;
+    background-color: $color_table-header;
+    color: black;
+    border-right: 1px solid $color_table-header-border;
+    padding: 0 6px;
+    text-align: left;
+    cursor: pointer;
+
+    &.unit-name {
+      z-index: 2;
+    }
+  }
+
+  tr {
+    width: 100%;
+
+    &:hover td {
+      background-color: $color_row-hover;
+    }
+    
+    &.variant {
+      .unit-name {
+        border-top: 0;
+        border-left: 5px solid $color_table-border;
+      }
+      
+      td {
+        border-top: none;
+      }
+    }
+  }
+
+  th:hover {
+    background-color: $color_row-hover;
+  }
+
+  td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .unit-name {
+    position: sticky;
+    left: 0;
+    border-right: 1px solid $color_table-border;
+    box-shadow: 1px 0 3px rgba(0,0,0,.1);
+    max-width: 50vw;
+  }
+
+  .unit-controls {
+    position: sticky;
+    right: 0px;
+    border-left: 1px solid $color_table-border;
+    width: 40px;
+    box-shadow: -1px 0 3px rgba(0,0,0,.1);
+  }
+}

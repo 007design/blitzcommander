@@ -123,8 +123,8 @@ export default function GarageList(props: any) {
           <th onClick={(e) => props.sort("ua")}>Roles</th>
           <th onClick={(e) => props.sort("mr")}>Move</th>
           <th onClick={(e) => props.sort("ar")}>Armor</th>
-          <th onClick={(e) => props.sort("hs")}>Dmg</th>
-          <th onClick={(e) => props.sort("a")}>Act</th>
+          <th onClick={(e) => props.sort("hs")}>H/S</th>
+          <th onClick={(e) => props.sort("a")}>A</th>
           <th onClick={(e) => props.sort("gu")}>GU</th>
           <th onClick={(e) => props.sort("pi")}>PI</th>
           <th onClick={(e) => props.sort("ew")}>EW</th>

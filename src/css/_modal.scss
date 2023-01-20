@@ -1,0 +1,44 @@
+@import "colors";
+
+#modal {
+  display: none;
+  position: fixed;
+  z-index: 101;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+
+  &.show {
+    display: block;
+  }
+}
+
+#modal_overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  opacity: .5;
+  background: black;
+  z-index: 100;
+}
+
+#modal_content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 445px;
+  max-height: 90vh;
+  display: flex;
+  flex-flow: column nowrap;
+  background: white;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: solid 1px $color_table-border;
+  box-shadow: 0 2px 4px 0 rgba(black, .25);
+  z-index: 102;
+}

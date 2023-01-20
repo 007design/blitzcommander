@@ -8,20 +8,22 @@ Heavy Gear Blitz v3.0+ force construction application.
 - Robust filtering
 
 ## The story
-A long time ago I built a Heavy Gear Blitz army construction application in Java called Blitz Commander. I also did the layout for several books from the Locked & Loaded version of the game. Unfortunately, my working relationship with DP9 ended before BlitzCommander was every fully finished. (I had to get a real job and afterwards I no longer had the time to devote to the project.)
+A long time ago I built a Heavy Gear Blitz army construction application in Java called BlitzCommander. I also did the layout for several books from the Locked & Loaded version of the game. Unfortunately, my working relationship with DP9 ended before BlitzCommander was every fully finished. (I had to get a real job and afterwards I no longer had the time to devote to the project.)
 
-Time went by and DP9 soldiered on. When they released the 3.0 version of the rules my interest was again piqued and I started following Heavy Gear Blitz again.
+Time went by and DP9 soldiered on. When they released the 3.0 version of the rules my interest was piqued and I started following Heavy Gear Blitz again.
 
-**Short version:** I thought it was finally time that I learn TypeScript and React but I needed a project to build. I couldn't think of a better project than to resurrect BlitzCommander and this time make it a web application.
+**Short version:** I thought it was finally time that I learn TypeScript and React but I needed a project to build. I couldn't think of a better project than to resurrect BlitzCommander. It was a fun program the first time
 
 ## TODO
 - Datacard view
 - Load/save modal
 - Traits modal
 - CG objectives modal
-- Other modals (About, etc)
+- About modal
 - Table and/or sorting
 - Print stylesheets
+- Alt tags
+- Clean up typescript
 
 ## Credit
 Heavy Gear Blitz, images and all data © Dream Pod 9.

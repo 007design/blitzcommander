@@ -20,6 +20,8 @@ export default function ArmyPanel(props: any) {
       deleteUnit={props.deleteUnit}
       deleteCg={props.deleteCg}
       renameCg={props.renameCg}
+      openTooltip={props.openTooltip}
+      closeTooltip={props.closeTooltip}
     />
   ));
   return (

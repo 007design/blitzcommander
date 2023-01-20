@@ -1,0 +1,665 @@
+@import "mixins", "colors";
+
+#army_name {
+  position: relative;
+  width: 100%;
+  height: 40px;
+  padding: 0 50px;
+  background-color: black;
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+#new_squad_btn {
+  border: 0;
+  width: 100%;
+  height: 40px;
+  border-radius: 0;
+  background-color: $yellow;
+  font-weight: 700;
+  cursor: pointer;
+
+  @include datacardView {
+    display: none;
+  }
+}
+
+.combat-group {
+  width: 100%;
+}
+
+.cg-header {
+  position: sticky;
+  left: 0;
+  height: 45px;
+  background-color: darkgray;
+  padding: 3px 4px 15px;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: stretch;
+  font-weight: 700;
+  
+  @include datacardView {
+    display: none;
+  }
+}
+
+.cg-name {
+  height: 40px;
+}
+
+.cg-roles {
+  position: absolute;
+  bottom: 2px;
+  left: 5px;
+  font-size: 11px;
+
+  &.invalid {
+    .role {
+      color: $red;
+    }
+  }
+}
+
+.role {
+  margin-right: 5px;
+  color: black;
+
+  &.invalid {
+    color: $color_button-fg;
+  }
+
+  &.selected {
+    color: $yellow;
+    text-shadow: 0px 0px 3px black;
+  }
+}
+
+.cg-list {
+  width: 100%;
+  border-spacing: 0;
+  flex: 1 0 auto;
+  border-right: 2px solid darkgray;
+  border-left: 5px solid darkgray;
+  border-bottom: 2px solid darkgray;
+  border-top: 0;
+
+  td {
+    height: 20px;
+    border-bottom: 0;
+  }
+
+  tr:nth-child(odd) {
+    td {
+      background-color: white;
+    }
+  }
+
+  @include armyView {
+    width: auto;
+    border: none;
+    min-width: 100%;
+
+    @include mobile {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  @include datacardView {
+    border: none;
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+.unit-scroll {
+  position: relative;
+  width: 100%;
+  overflow: auto;
+
+  @include defaultView {
+    overflow: auto;
+  }
+
+  @include datacardView {
+    overflow: initial;
+  }
+}
+
+.army-list {
+  position: relative;
+  width: 100%;
+  flex: 1 0 0;
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  overflow-y: scroll;
+
+  @include mobile {
+    flex: 1 1;
+    width: 100%;
+    overflow: auto;
+  }
+}
+
+.unit-row {
+  background-color: white;
+  
+  @include armyView {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+  }
+
+  @include datacardView {
+    display: block;
+    position: relative;
+    width: 63.5mm;
+    height: 88.9mm;
+    background: url('../../public/dc.png');
+    border: 1px solid black;
+  }
+
+  &:first-child {
+    .th {
+      display: block;
+    }
+  }
+}
+
+.unit-stats {
+  display: flex;
+  flex-wrap: nowrap;
+  background-color: $color_table-row-odd;
+
+  @include armyView {
+    display: table-row;
+    @include mobile {
+      display: flex;
+      font-size: 12px;
+    }
+  }
+
+  @include datacardView {
+    flex-direction: column-reverse;
+    background-color: transparent;
+    padding-top: 160px;
+  }
+  
+  @include mobile {
+    background-color: white;
+    margin-bottom: 5px;
+    flex-wrap: wrap;
+
+    .th {
+      display: block;
+    }
+  }
+
+  &:nth-child(even) {
+    background-color: $color_table-row-even;
+
+    @include mobile {
+      background-color: white;
+    }
+    
+    .name,
+    .controls {
+      background-color: $color_table-row-even;
+    }
+  }
+}
+
+.stat-pair {
+  display: table-cell;
+  flex-wrap: wrap;
+  flex-direction: column;
+  border-bottom: 1px solid $color_table-border;
+
+  &.controls {
+    justify-content: flex-end;
+  }
+
+  &.controls, &.name {
+    background-color: $color_table-row-odd;
+  }
+
+  .th {
+    display: none;
+    background-color: rgb(232, 232, 232);
+    color: black;
+    font-weight: 700;
+    padding: 4px;
+  }
+
+  .td {
+    padding: 4px;
+  }
+
+  .expanded {
+    display: none;
+    
+    table {
+      width: 100%;
+    }
+  }
+
+  @include armyView {
+    &.mr,
+    &.ar,
+    &.hs,
+    &.gu,
+    &.pi,
+    &.ew,
+    &.a,
+    &.type {
+      width: 35px;
+    }
+    
+    &.tv {
+      width: 40px;
+    }
+
+    &.ua {
+      width: 120px;
+    }
+    
+    &.height,
+    &.type,
+    &.etc {
+      width: 60px
+    }
+
+    &.name,
+    &.controls {
+      position: sticky;
+    }
+
+    &.name {
+      left: 25px;
+    }
+
+    &.controls {
+      width: 25px;
+      left: 0px;
+      vertical-align: bottom;
+    }
+
+    .td {
+      white-space: normal;
+    }
+
+    @include mobile {
+      display: flex;
+      flex-direction: row;
+      width: 50%;
+  
+      .th {
+        display: flex;
+        width: 50%;
+      }
+  
+      &.controls {
+        width: 40px;
+      }
+  
+      &.name {
+        font-weight: 700;
+        font-size: 18px;
+        width: calc(67% - 40px);
+      }
+  
+      &.ua {
+        width: 67%;
+      }
+  
+      &.name .th {
+        display: none;
+      }
+  
+      &.ar,
+      &.a,
+      &.gu,
+      &.ew {
+        width: 33%;
+      }
+  
+      &.hs,
+      &.pi {
+        width: 34%;
+      }
+  
+      &.rweapons,
+      &.mweapons,
+      &.traits,
+      &.etc {
+        width: 100%;
+  
+        .th {
+          width: 100%;
+        }
+  
+        .td {
+          width: 100%;
+        }
+      }
+  
+      &.tv,
+      &.mr {
+        width: 33%;
+      }
+  
+      &.type,
+      &.height {
+        display: none;
+      }
+
+      .expanded {
+        display: block;
+        overflow: auto;
+      }
+      .collapsed {
+        display: none;
+      }
+    }
+  }
+
+  @include defaultView {
+    display: none;
+    flex-direction: row;
+
+    &.controls {
+      display: block;
+    }
+  
+    &.name {
+      display: block;
+      flex: 1 0 auto;
+      max-width: calc(100% - 84px);
+  
+      .th {
+        display: none;
+      }
+    }
+  
+    &.tv {
+      display: flex;
+      flex-direction: row-reverse;
+      flex-grow: 1;
+  
+      .th {
+        display: block;
+        background-color: transparent;
+        font-weight: 400;
+      }
+    }
+  }
+
+  @include datacardView {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    font-size: 3mm;
+
+    .expanded {
+      display: block;
+      font-size: 8px;
+    }
+
+    .collapsed {
+      display: none;
+    }
+
+    .th {
+      display: block;
+      padding: 1px;
+      background-color: black;
+      color: white;
+    }
+
+    .td {
+      flex: 1;
+      padding: 0 1px;
+      border: 1px solid black;
+      background-color: white;
+      text-align: right;
+    }
+
+    &.controls {
+      display: none;
+    }
+
+    &.name {
+      top: 20px;
+      left: 8px;
+      height: 18px;
+      width: 226px;
+
+      .th {
+        display: none;
+      }
+
+      .td {
+        text-align: left;
+        padding-left: 2px;
+      }
+    }
+
+    &.ua {
+      top: 5px;
+      left: 8px;
+      width: 155px;
+
+      .th {
+        display: block;
+      }
+
+      .td {
+        text-align: left;
+        padding-left: 2px;
+      }
+    }
+
+    &.tv {
+      top: 5px;
+      left: 162px;
+      width: 72px;
+
+      .th {
+        display: block;
+      }
+
+      .td {
+        text-align: left;
+        padding-left: 2px;
+      }
+    }
+
+    &.traits {
+      position: relative;
+      flex-direction: column;
+      left: 2px;
+      width: 234px;
+
+      .th {
+        width: 70px;
+      }
+
+      .td {
+        text-align: left;
+        padding-left: 2px;
+      }
+    }
+
+    &.mweapons {
+      position: relative;
+      flex-direction: column;
+      left: 2px;
+      width: 234px;
+      padding: 0;
+
+      .th {
+        display: none;
+      }
+
+      .td {
+        text-align: left;
+        padding: 0;
+        height: auto;
+      }
+
+      td {
+        height: auto;
+
+        &.weapon-name {
+          white-space: nowrap;
+        }
+      }
+    }
+
+    &.rweapons {
+      position: relative;
+      flex-direction: column;
+      left: 2px;
+      width: 234px;
+
+      .th {
+        display: none;
+      }
+
+      .td {
+        text-align: left;
+        padding: 0;
+      }
+
+      td {
+        height: auto;
+        
+        &.weapon-name {
+          white-space: nowrap;
+        }
+      }
+    }
+
+    &.etc {
+      display: none;
+    }
+
+    &.type {
+      top: 55px;
+      left: 140px;
+      width: 81px;
+    }
+
+    &.height {
+      top: 55px;
+      left: 220px;
+      width: 15px;
+
+      .th {
+        display: none;
+      }
+
+      .td {
+        border-left: none;
+      }
+    }
+
+    &.mr {
+      top: 72px;
+      left: 140px;
+      width: 95px;
+    }
+
+    &.gu {
+      top: 91px;
+      left: 140px;
+      width: 46px;
+
+      .th {
+        width: 6mm;
+      }
+    }
+
+    &.pi {
+      top: 106px;
+      left: 140px;
+      width: 46px;
+
+      .th {
+        width: 6mm;
+      }
+    }
+
+    &.ew {
+      top: 121px;
+      left: 140px;
+      width: 46px;
+
+      .th {
+        width: 6mm;
+      }
+    }
+
+    &.a {
+      top: 91px;
+      left: 193px;
+      width: 42px;
+
+      .th {
+        width: 6mm;
+      }
+    }
+
+    &.ar {
+      top: 106px;
+      left: 193px;
+      width: 42px;
+
+      .th {
+        width: 6mm;
+      }
+    }
+
+    &.hs {
+      top: 121px;
+      left: 193px;
+      width: 42px;
+
+      .th {
+        width: 6mm;
+      }
+    }
+  }
+}
+
+.unit-options {
+  display: table-row;
+  padding: 2px 4px;
+  font-size: 12px;
+
+  @include datacardView {
+    position: relative;
+    display: block;
+    left: 2px;
+    width: 234px;
+    background-color: white;
+    border: 1px solid black;
+  }
+
+  div {
+    padding: 2px 4px;
+
+    @include armyView {
+      width: 98vw;
+    }
+  
+    @include datacardView {
+      font-size: 10px;
+      padding: 0;
+    }
+  }
+}

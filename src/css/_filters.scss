@@ -1,0 +1,162 @@
+@import "colors", "mixins";
+
+#filter_panel {
+  position: sticky;
+  top: 40px;
+  min-height: 50px;
+  padding-right: 5px;
+  flex: 0 1 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  background-color: white;
+  
+  @include mobile {
+    padding: 0;
+  }
+}
+
+#faction_filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  .filter-button {
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: 0;
+    padding: 0;
+    height: 40px;
+    width: 40px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    cursor: pointer;
+
+    &.north {
+      background-image: url('../../public/north.png');
+    }
+
+    &.south {
+      background-image: url('../../public/south.png');
+    }
+
+    &.pr {
+      background-image: url('../../public/pr.png');
+    }
+
+    &.nucoal {
+      background-image: url('../../public/nucoal.png');
+    }
+
+    &.bt {
+      background-image: url('../../public/bt.png');
+    }
+
+    &.cef {
+      background-image: url('../../public/cef.png');
+    }
+
+    &.caprice {
+      background-image: url('../../public/caprice.png');
+    }
+
+    &.utopia {
+      background-image: url('../../public/utopia.png');
+    }
+
+    &.eden {
+      background-image: url('../../public/eden.png');
+    }
+
+    &.universal {
+      background-image: url('../../public/universal.png');
+    }
+
+    &.options {
+      background-image: url('../../public/options.png');
+    }
+  }
+}
+
+#new_filter {
+  display: flex;
+  align-items: center;
+  padding-right: 5px;
+  border-right: 1px solid $color_table-border;
+  
+  select {
+    width: 110px;
+    height: 28px;
+    background-color: white;
+    border: 1px solid $color_filter-border;
+    border-radius: 3px;
+    font-size: 14px;
+    padding: 4px 6px;
+    margin-right: 5px;
+  }
+}
+
+#global_filters {
+  display: flex;
+}
+
+#filter_controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  label {
+    padding: 8px;
+    font-size: 14px;
+
+    input {
+      margin-right: 5px;
+    }
+  }
+}
+
+#filter_tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.tag {
+  position: relative;
+  display: inline-block;
+  font-size: 12px;
+  background-color: $color_filter-bg;
+  border: 2px solid $color_filter-border;
+  padding: 4px 22px 4px 4px;
+  border-radius: 13px;
+  font-weight: bold;
+  color: $color_filter-border;
+  margin: 4px;
+
+  .delete-tag {
+    position: absolute;
+    background-color: transparent;
+    border: none;
+    right: 17px;
+    cursor: pointer;
+
+    &::before, &::after {
+      content:'';
+      position: absolute;
+      width: 13px;
+      height: 3px;
+      top: 6px;
+      left: 0px;
+      background-color: $color_filter-border;
+    }
+  
+    &::before {
+      transform: rotate(45deg);
+    }
+  
+    &::after {
+      transform: rotate(135deg);
+    }
+  }
+}
