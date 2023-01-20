@@ -21,6 +21,30 @@
     @content;
   }
 }
+@mixin closeIcon {
+  &::before, &::after {
+    content:'';
+    position: absolute;
+    width: 13px;
+    height: 3px;
+    top: 9px;
+    left: 4px;
+    background-color: $color_button-fg;
+  
+    @include mobile {
+      width: 18px;
+      top: 11px;
+    }
+  }
+
+  &::before {
+    transform: rotate(45deg);
+  }
+
+  &::after {
+    transform: rotate(135deg);
+  }
+}
 @mixin plusSign {
   &::before, &::after {
     content: '';

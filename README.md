@@ -15,9 +15,7 @@ Time went by and DP9 soldiered on. When they released the 3.0 version of the rul
 **Short version:** I thought it was finally time that I learn TypeScript and React but I needed a project to build. I couldn't think of a better project than to resurrect BlitzCommander. It was a fun program the first time
 
 ## TODO
-- H/S boxes
 - CG objectives modal
-- About modal
 - Table and/or sorting
 - Print stylesheets
 - Alt tags

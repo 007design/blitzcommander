@@ -8,7 +8,12 @@
   background-color: black;
   color: white;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+#total_tv {
+  font-size: 10px;
 }
 
 #new_squad_btn {
@@ -249,7 +254,6 @@
   }
 
   @include armyView {
-    &.mr,
     &.ar,
     &.hs,
     &.gu,
@@ -262,6 +266,10 @@
     
     &.tv {
       width: 40px;
+    }
+
+    &.mr {
+      width: 60px;
     }
 
     &.ua {
@@ -636,6 +644,76 @@
         width: 6mm;
       }
     }
+
+    .damage-tracker {
+      display: flex;
+    }
+  }
+}
+
+.damage-tracker {
+  position: absolute;
+  display: none;
+  align-items: center;
+  top: 19px;
+  left: -83px;
+  width: 95px;
+}
+
+.hit-button {
+  appearance: none;
+  width: 30px;
+  height: 30px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+
+  @include closeIcon;
+
+  &:before, &:after {
+    top: 14px;
+    background-color: $red;
+  }
+}
+
+.damage-box {
+  height: 13px;
+  width: 13px;
+  margin-left: 3px;
+  background-color: white;
+  border: 1px solid black;
+}
+
+.boxes {
+  display: flex;
+  flex-direction: column;
+
+  .h-boxes {
+    margin-bottom: 3px;
+
+    .damage-box {
+      background-color: $damage-box-h;
+
+      &.checked {
+        background-color: $red;
+      }
+    }
+  }
+
+  .s-boxes {
+    .damage-box {
+      background-color: $damage-box-s;
+
+      &.checked {
+        background-color: $red;
+      }
+    }
+  }
+
+  .h-boxes,
+  .s-boxes {
+    display: flex;
+    flex-direction: row;
   }
 }
 

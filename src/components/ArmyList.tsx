@@ -1,14 +1,21 @@
 import { cloneElement } from "react";
 
+import DamageTracker from "./DamageTracker";
+
 export default function ArmyList(props: any) {
   const units: Array<Unit> = props.units || [];
 
   const rows = units.map((unit:Unit, index) => {
-    const row = { ...unit }
+    let totalTv = unit.tv
+
+    unit.options.forEach((opt) => {
+      totalTv += opt.tv
+    })
+    const row:Unit = { ...unit, tv: totalTv }
     if (Array.isArray(row.options))
       row.options.forEach((option) => {
         Object.keys(option).forEach((key) => {
-          if (key === 'name' || key === 'type') return;
+          if (key === 'name' || key === 'type' || key === 'tv') return;
           if (Array.isArray(row[key]))
             row[key] = [ ...row[key] as Array<string>, ...option[key] as Array<string>]
           else if (option[key])
@@ -45,6 +52,7 @@ export default function ArmyList(props: any) {
           <div className="stat-pair hs">
             <div className="th">H/S</div>
             <div className="td">{row.hs}</div>
+            <DamageTracker hs={row.hs} />
           </div>
           <div className="stat-pair a">
             <div className="th">A</div>
@@ -64,7 +72,18 @@ export default function ArmyList(props: any) {
           </div>
           <div className="stat-pair rweapons">
             <div className="th">React Weapons</div>
-            <div className="td collapsed">{row.rweapons.join(', ')}</div>
+            <div className="td collapsed">
+              {row.rweapons.map((w, i) => (
+                <span className="tooltip-target" tabIndex={1} key={i} onFocus={
+                  (e) => props.openTooltip(
+                    e.currentTarget.getBoundingClientRect(), 
+                    props.tooltips[w]
+                  )
+                } onBlur={() => props.closeTooltip()}>
+                  {`${i > 0 ? ', ' : ''}${w}`}
+                </span>
+              ))}
+            </div>
             <div className="td expanded">
               <table>
                 <tbody>
@@ -98,7 +117,18 @@ export default function ArmyList(props: any) {
           </div>
           <div className="stat-pair mweapons">
             <div className="th">Mounted Weapons</div>
-            <div className="td collapsed">{row.mweapons.join(', ')}</div>
+            <div className="td collapsed">
+              {row.mweapons.map((w, i) => (
+                <span className="tooltip-target" tabIndex={1} key={i} onFocus={
+                  (e) => props.openTooltip(
+                    e.currentTarget.getBoundingClientRect(), 
+                    props.tooltips[w]
+                  )
+                } onBlur={() => props.closeTooltip()}>
+                  {`${i > 0 ? ', ' : ''}${w}`}
+                </span>
+              ))}
+            </div>
             <div className="td expanded">
               <table>
                 <tbody>
@@ -157,7 +187,7 @@ export default function ArmyList(props: any) {
             <div className="th">Notes</div>
             <div className="td">
               { row.rules ? (
-                <span className="tooltip-target" onClick={
+                <span className="tooltip-target" tabIndex={1} onClick={
                   (e) => props.openTooltip(
                     e.currentTarget.getBoundingClientRect(), 
                     row.rules
@@ -174,13 +204,13 @@ export default function ArmyList(props: any) {
             {
               row.options.map((unit:Unit, i:number) => (
                 <div key={i}>
-                  <span className="tooltip-target" onClick={
+                  <span className="tooltip-target" tabIndex={1} onClick={
                     (e) => props.openTooltip(
                       e.currentTarget.getBoundingClientRect(), 
                       unit.rules
                     )
                   }>
-                    {unit.name}
+                    {unit.name} [{unit.tv}TV]
                   </span>
                 </div>
               ))

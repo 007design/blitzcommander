@@ -1,3 +1,5 @@
 - [0.1.0 - 01-16-2023] Initial commit
 - [0.2.0 - 01-19-2023] Almost there
 - [0.3.0 - 01-20-2023] Functionally complete
+- [0.4.0 - 01-20-2023] Modal updates
+- [0.5.0 - 01-20-2023] Damage boxes and TV addition

@@ -24,6 +24,18 @@ export default function ArmyPanel(props: any) {
       closeTooltip={props.closeTooltip}
     />
   ));
+
+  let totalTv = 0;
+  groups.forEach((squad) => {
+    squad.units.forEach((unit) => {
+      totalTv += unit.tv
+
+      unit.options.forEach((opt) => {
+        totalTv += opt.tv
+      })
+    })
+  })
+
   return (
     <section id="left_panel">
       {
@@ -45,6 +57,7 @@ export default function ArmyPanel(props: any) {
                   <span className="edit-pencil"/> 
                 </span>
             }
+            <div id="total_tv">{totalTv}TV</div>
           </div>
       }
       <div className="army-list" onScroll={() => props.closeTooltip()}>{squads}</div>
