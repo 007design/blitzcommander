@@ -44,7 +44,7 @@
 @mixin barsIcon {
   &::before {
     position: absolute;
-    top: 12px;
+    top: 22px;
     left: 14px;
     content: "";
     display: inline-block;
@@ -56,8 +56,8 @@
   }
 
   &::after {
-    position: relative;
-    top: 6px;
+    position: absolute;
+    top: 13px;
     left: 14px;
     content: "";
     display: inline-block;

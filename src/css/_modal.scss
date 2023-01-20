@@ -42,3 +42,48 @@
   box-shadow: 0 2px 4px 0 rgba(black, .25);
   z-index: 102;
 }
+
+.modal-scroll {
+  overflow-y: scroll;
+  flex-grow: 1;
+}
+
+#modal_save {
+  display: flex;
+  flex-direction: column;
+  padding: 30px 10px 10px;
+
+  textarea {
+    font-size: 12px;
+  }
+}
+
+#permalink_button {
+  background-color: $color_filter-border;
+  border: none;
+  padding: 8px 0;
+  margin-top: 10px;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color .2s;
+
+  &.done {
+    background-color: $green;
+  }
+}
+
+#modal_traits {
+  padding: 30px 10px 10px;
+  font-size: 12px;
+  overflow: hidden;
+  display: flex;
+
+  h2 {
+    font-size: 18px;
+  }
+
+  .trait-row {
+    margin-bottom: 10px;
+  }
+}

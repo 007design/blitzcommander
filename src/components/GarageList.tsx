@@ -75,32 +75,32 @@ export default function GarageList(props: any) {
       <td>{row.pi}</td>
       <td>{row.ew}</td>
       <td>{row.rweapons.map((w, i) => (
-        <span className="tooltip-target" key={i} onClick={
+        <span className="tooltip-target" tabIndex={1} key={i} onFocus={
           (e) => props.openTooltip(
             e.currentTarget.getBoundingClientRect(), 
             props.tooltips[w]
           )
-        }>
+        } onBlur={() => props.closeTooltip()}>
           {`${i > 0 ? ', ' : ''}${w}`}
         </span>
       ))}</td>
       <td>{row.mweapons.map((w, i) => (
-        <span className="tooltip-target" key={i} onClick={
+        <span className="tooltip-target" tabIndex={1} key={i} onClick={
           (e) => props.openTooltip(
             e.currentTarget.getBoundingClientRect(), 
             props.tooltips[w]
           )
-        }>
+        } onBlur={() => props.closeTooltip()}>
           {`${i > 0 ? ', ' : ''}${w}`}
         </span>
       ))}</td>
       <td>{row.traits.map((t, i) => (
-        <span className="tooltip-target" key={i} onClick={
+        <span className="tooltip-target" tabIndex={1} key={i} onClick={
           (e) => props.openTooltip(
             e.currentTarget.getBoundingClientRect(), 
             props.tooltips[t]
           )
-        }>
+        } onBlur={() => props.closeTooltip()}>
           {`${i > 0 ? ', ' : ''}${t}`}
         </span>
       ))}</td>

@@ -161,6 +161,7 @@
     height: 88.9mm;
     background: url('../../public/dc.png');
     border: 1px solid black;
+    border-radius: 18px;
   }
 
   &:first-child {
@@ -186,7 +187,7 @@
   @include datacardView {
     flex-direction: column-reverse;
     background-color: transparent;
-    padding-top: 160px;
+    padding-top: 154px;
   }
   
   @include mobile {
@@ -402,6 +403,7 @@
     display: flex;
     flex-direction: row;
     position: absolute;
+    border: 0;
     font-size: 3mm;
 
     .expanded {
@@ -537,6 +539,7 @@
 
       td {
         height: auto;
+        padding: 0 2px;
         
         &.weapon-name {
           white-space: nowrap;

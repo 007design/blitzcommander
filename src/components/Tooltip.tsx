@@ -42,7 +42,6 @@ export default function Tooltip(props: any) {
 
   return (
     <div id="tooltip_container" className={props.show ? 'show' : ''}>
-      <div id="tooltip_overlay" onClick={props.hide} />
       <div id="tooltip" style={styles}>
         <div id="tooltip_content" ref={tooltip} style={offset}>
           <button className="close-tooltip" onClick={props.hide} />

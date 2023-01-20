@@ -1,0 +1,70 @@
+@import "colors", "mixins";
+
+#menu {
+  position: relative;
+}
+
+#menu_button {
+  appearance: none;
+  position: relative;
+  border: 0;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  height: 40px;
+  width: 40px;
+  background-color: white;
+  cursor: pointer;
+  z-index: 2;
+
+  .bars {
+    position: relative;
+    display: block;
+    height: 100%;
+    width: 100%;
+
+    @include barsIcon;
+  }
+
+  &.show {
+    box-shadow: -2px -3px 3px rgba(0, 0, 0, 0.2);
+  }
+}
+
+#menu_list {
+  position: absolute;
+  right: -10px;
+  top: 100%;
+  padding: 0;
+  margin: 0;
+  background-color: white;
+  box-shadow: -1px 0px 3px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.menu-option {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  button {
+    appearance: none;
+    display: block;
+    width: 100%;
+    padding: 10px 50px 10px 20px;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    border-bottom: 1px solid $color_table-border;
+    background-color: transparent;
+    text-align: left;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    color: $color_filter-border;
+
+    &:hover {
+      background-color: $color_row-hover;
+    }
+  }
+}

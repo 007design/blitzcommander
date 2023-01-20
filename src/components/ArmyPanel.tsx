@@ -47,7 +47,7 @@ export default function ArmyPanel(props: any) {
             }
           </div>
       }
-      <div className="army-list">{squads}</div>
+      <div className="army-list" onScroll={() => props.closeTooltip()}>{squads}</div>
       <AddSquadButton army={props.army} click={props.addSquad} />
     </section>
   );

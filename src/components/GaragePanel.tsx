@@ -48,7 +48,7 @@ export default function GaragePanel(props: any) {
         optionsToggle={(state:boolean) => setHideOptions(state)}
         variantsToggle={(state:boolean) => setGroupVariants(state)}
       />
-      <div id="garage-list">
+      <div id="garage-list" onScroll={() => props.closeTooltip()}>
         <GarageList
           units={props.garage}
           tooltips={props.tooltips}

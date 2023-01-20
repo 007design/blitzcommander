@@ -4,6 +4,7 @@ import axios from "axios";
 import "./styles.scss";
 import "./types";
 
+import Menu from "./components/Menu";
 import Modal from "./components/Modal";
 import Tooltip from "./components/Tooltip";
 import ArmyPanel from "./components/ArmyPanel";
@@ -210,7 +211,12 @@ export default function App() {
         <div id="logo">
           <img src="bc.gif" alt="Blitz Commander 2" />
         </div>
-        <nav id="menu">Menu</nav>
+        <Menu 
+          army={army} 
+          tooltips={tooltips}
+          openModal={openModal} 
+          closeModal={closeModal}
+        />
       </header>
       <main className={view}>
         <button
