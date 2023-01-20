@@ -1,7 +1,7 @@
 export default function ModalAbout(props: any) {
   return (
     <div id="modal_about">
-      <h2>BlitzCommander 2 v0.5</h2>
+      <h2>BlitzCommander 2 v {`${process.env.REACT_APP_VERSION}`}</h2>
       Heavy Gear Blitz, images, and all data &copy; <a href="https://www.dp9.com/" target="_blank">Dream Pod 9</a>.
       <br />
       Coded by Daniel Hinds-Bond. <a href="https://007design.com/" target="_blank">007design</a>

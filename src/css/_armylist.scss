@@ -412,7 +412,7 @@
     flex-direction: row;
     position: absolute;
     border: 0;
-    font-size: 3mm;
+    font-size: 10px;
 
     .expanded {
       display: block;
@@ -617,8 +617,8 @@
 
     &.a {
       top: 91px;
-      left: 193px;
-      width: 42px;
+      left: 190px;
+      width: 45px;
 
       .th {
         width: 6mm;
@@ -627,8 +627,8 @@
 
     &.ar {
       top: 105px;
-      left: 193px;
-      width: 42px;
+      left: 190px;
+      width: 45px;
 
       .th {
         width: 6mm;
@@ -637,8 +637,8 @@
 
     &.hs {
       top: 119px;
-      left: 193px;
-      width: 42px;
+      left: 190px;
+      width: 45px;
 
       .th {
         width: 6mm;
@@ -655,9 +655,9 @@
   position: absolute;
   display: none;
   align-items: center;
-  top: 19px;
-  left: -83px;
-  width: 95px;
+  top: 16px;
+  left: -81px;
+  width: 127px;
 }
 
 .hit-button {
