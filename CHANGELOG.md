@@ -4,3 +4,4 @@
 - [0.4.0 - 01-20-2023] Modal updates
 - [0.5.0 - 01-20-2023] Damage boxes and TV addition
 - [0.6.0 - 01-20-2023] Bugfixes
+- [0.7.0 - 01-20-2023] More bugfixes
